@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>fueled</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+<h1>FUELED</h1>
+<p>calculate the fuel output</p>
+
+    </header>
+    <fieldset class="gasoline-vehicles">
+        <legend>Gasoline Vehicles</legend>
+        <div id="input-container">
+    </div>
+    </fieldset>
+    <fieldset class="diesel-vehicles">
+        <legend>Diesel Vehicles</legend>
+        <div id="input-container">
+        </div>
+    </fieldset>
+    <fieldset class="gasoline-production">
+        <legend>Gasoline Production</legend>
+        <div id="input-container">
+        </div>
+    </fieldset>
+    <fieldset class="diesel-production">
+        <legend>Diesel Production</legend>
+        <div id="input-container">
+        </div>
+    </fieldset>
+    <div id="add-input-div">
+    <button type="button" id="add-input">add input</button>
+<select id="input-type">
+    <option selected value="gasoline-vehicles">Gasoline Vehicles</option>
+    <option value="diesel-vehicles">Diesel Vehicles</option>
+    <option value="gasoline-production">Gasoline Production</option>
+    <option value="diesel-production">Diesel Production</option>
+</select>
+    </div>
+<button id="caloutput" type="submit">Calculate output</button>
+<button id="clear-form" type="button">clear form</button>
+<script src="script.js"></script>
+<fieldset id="output-fieldset"></fieldset>
+</body>
+</html>
