@@ -1,6 +1,8 @@
 const addInputButton = document.getElementById("add-input");
 const selectInputType = document.getElementById("input-type");
 const outputButton = document.getElementById("caloutput");
+const clearButton = document.getElementById("clear-form")
+let isError = false;
 
 function addNewInput() {
   const selectedType = selectInputType.value;
@@ -28,21 +30,23 @@ function addNewInput() {
 
 function cleanInputs(str) {
 const regex = /[\+-\s]/g;
-return str.replace(regex, "")
+return str.replace(regex, " ")
 }
 
-function alert (str) {
+function invalidInput (str) {
 const regex = /\d+e\d+/i;
 return str.match(regex)
 }
 
-function getInputs() {
-  const gasolineUseAverage = document.querySelectorAll(".gasoline-vehicle-avrage");
-  const gasolineUseNumber = document.querySelectorAll(".gasoline-vehicle-number");
-  const dieselUseAverage = document.querySelectorAll(".diesel-vehicle-average");
-  const dieselUseNumber = document.querySelectorAll(".diesel-vehicle-number");
-  const gasolineProduction = document.querySelectorAll(".gasoline-production");
-  const dieselProduction = document.querySelectorAll(".diesel-production");
+function getInputs(e) {
+e.preventDefault();
+isError = false;
+  const gasolineUseAverage = document.querySelectorAll("#gasoline-vehicles-average");
+  const gasolineUseNumber = document.querySelectorAll("#gasoline-vehicles-number");
+  const dieselUseAverage = document.querySelectorAll("#diesel-vehicles-average");
+  const dieselUseNumber = document.querySelectorAll("#diesel-vehicles-number");
+  const gasolineProduction = document.querySelectorAll("#gasoline-production");
+  const dieselProduction = document.querySelectorAll("#diesel-production");
 
   const gasolineUseAverageInput = calculateResult(gasolineUseAverage);
   const gasolineUseNumberInput = calculateResult(gasolineUseNumber);
@@ -57,13 +61,24 @@ const gasoline = (gasolineUseAverageInput * gasolineUseNumberInput) - gasolinePr
 const diesel = (dieselUseAverageInput * dieselUseNumberInput) - dieselProductionInput;
 const gasolineSurplusOrDeficit = gasoline > 0 ? "Surplus" : "Deficit";
 const dieselSurplusOrDeficit = diesel > 0 ? "Surplus" : "Deficit";
+const outputDiv = document.querySelector(".end-div");
+outputDiv.innerHTML = `
+<h1 style="color: ${gasoline > 0 ? "green" : "red"}">${gasoline} Liter Gasoline ${gasolineSurplusOrDeficit}</h1>
+<p>Gasoline Used: ${gasolineUseAverageInput * gasolineUseNumberInput}</p>
+<p>Gasoline produced: ${gasolineProductionInput}</p>
+<hr>
+<h1 style="color: ${diesel > 0 ? "green" : "red"}">${diesel} Liter Diesel ${dieselSurplusOrDeficit}</h1>
+<p>Diesel Used: ${dieselUseAverageInput * dieselUseNumberInput}</p>
+<p>Diesel produced: ${dieselProductionInput}</p>
+`;
+outputDiv.style.display = "block";
 }
 
 function calculateResult(list) {
-let readyOutput ;
+let readyOutput = 0;
 for (const item of list) {
   const circulate = cleanInputs(item.value);
-  const isItInvalid = alert(circulate);
+  const isItInvalid = invalidInput(circulate);
 
 if (isItInvalid) {
   isError = true;
@@ -75,5 +90,12 @@ readyOutput = Number(circulate)
 return readyOutput;
 }
 
+function clearPage() {
+  const outputDiv = document.querySelector(".end-div");
+  outputDiv.style.display = "none";
+  outputDiv.innerHTML = "";
+}
+
+clearButton.addEventListener("click", clearPage)
 outputButton.addEventListener("click", getInputs);
 addInputButton.addEventListener("click", addNewInput);
